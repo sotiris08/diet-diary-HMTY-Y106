@@ -106,7 +106,7 @@ class ProfileData:
             ProfileData.bmiData[date] = bmi_obj
             return True
 
-    def add_foodweek_data(self, date: str, week_day: str foodtypes: list):      #Δημιουργία δεδομένων foodweek για μια συγκεκριμένη ημερομηνία
+    def add_foodweek_data(self, date: str, week_day: str, foodtypes: list):      #Δημιουργία δεδομένων foodweek για μια συγκεκριμένη ημερομηνία
         if date in ProfileData.foodweekData:
             return False
         elif date not in ProfileData.foodweekData:
