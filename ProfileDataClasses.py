@@ -1,4 +1,4 @@
-#ProfileData Classes Dimitris Sgourakis
+#ProfileData Classes
 import DateNotFoundError
         
 class WeightHistory:
@@ -94,15 +94,3 @@ class BMIHistory:
 
     #def __str__(self):
     #    return f"{self.date},{self.bmi}"
-
-
-class FoodDayHistory:
-
-    def __init__(self, date: str, week_day: str, foodtypes: list):   #ημερομηνία, μέρα της εβδομάδας, είδος φαγητού
-        self.date = date
-        self.week_day = week_day
-        self.foodtypes = foodtypes      #self.foodtypes: list object with FoodData elements
-        self.food_number = len(self.foodtypes)      #αριθμός ειδών φαγητού(ο αριθμός αυξάνεται ακόμη και αν έχει καταναλωθεί το ίδιο είδος φαγητού)
-
-    def __str__(self):
-        return f"{self.date},{self.week_day},{self.food_number},{self.foodtypes}"
