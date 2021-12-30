@@ -10,7 +10,10 @@ class WeightHistory:
         '''Δίνεις τις ημέρες που θες σε μορφή λίστας και σου επιστρέφει ένα λεξικό με κλειδιά της ημέρες και για τιμές το βάρος'''
         result = {}
         for item in dates:
-            result[item] = self.history[item]
+            try:
+                result[item] = self.history[item]
+            except KeyError: 
+                result[item] = None
         return result
 
     def updateWeightForDay(self, date, weight):
@@ -41,7 +44,10 @@ class HydrationHistory:
         '''Δίνεις τις ημέρες που θες σε μορφή λίστας και σου επιστρέφει ένα λεξικό με κλειδιά της ημέρες και για τιμές το hydration'''
         result = {}
         for item in dates:
-            result[item] = self.history[item]
+            try:
+                result[item] = self.history[item]
+            except KeyError: 
+                result[item] = None
         return result
 
     def updateHydrationForDay(self, date, hydration):
@@ -73,7 +79,10 @@ class BMIHistory:
         '''Δίνεις τις ημέρες που θες σε μορφή λίστας και σου επιστρέφει ένα λεξικό με κλειδιά της ημέρες και για τιμές το BMI'''
         result = {}
         for item in dates:
-            result[item] = self.history[item]
+            try:
+                result[item] = self.history[item]
+            except KeyError: 
+                result[item] = None
         return result
 
     def updateBMIForDay(self, date, BMI):
