@@ -1,1 +1,1 @@
-class FoodNotFoundError: pass
+class FoodNotFoundError(Exception): pass

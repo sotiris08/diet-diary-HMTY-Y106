@@ -1,10 +1,11 @@
 import json
-import FoodNotFoundError
-import FoodNameExistsError
+from FoodNotFoundError import FoodNotFoundError
+from FoodNameExistsError import FoodNameExistsError
 
 class FoodData:
     foods = {}
-    def __init__():
+    
+    def init():
         f = open('./data/foods.json', 'r', encoding='utf-8')
         FoodData.foods = json.loads(f.read())
         f.close()
@@ -15,15 +16,22 @@ class FoodData:
         return result
 
     def getFoodCal(foodName):
-        try: return FoodData.foods[foodName]
-        except KeyError: raise FoodNotFoundError()
+        try: 
+            cal = FoodData.foods[foodName]
+            return cal
+        except KeyError: raise FoodNotFoundError('Wrong Food Name')
 
     def createFood(name, cal):
         try:
             if(FoodData.getFoodCal(name)):
-                raise FoodNameExistsError()
+                raise FoodNameExistsError('Food already exists')
         except FoodNotFoundError:
             FoodData.foods[name] = cal
             f = open('./data/foods.json', 'w', encoding='utf-8')
-            f.write(str(FoodData.foods))
+            newfoods = str(FoodData.foods)
+            i = 0
+            while i <= len(newfoods):
+                newfoods = newfoods.replace("'",'"')
+                i += 1
+            f.write(newfoods)
             f.close()
