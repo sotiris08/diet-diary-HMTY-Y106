@@ -1,0 +1,1 @@
+class FoodNameExistsError(Exception): pass
