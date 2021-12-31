@@ -6,3 +6,8 @@ class Client:
     Gui = Gui
     FoodData = FoodData
     ProfileData = ProfileData
+
+    def init():
+        Client.FoodData.init()
+        Client.ProfileData.init()
+        #Client.Gui.beginView(Client.Gui.StartView)

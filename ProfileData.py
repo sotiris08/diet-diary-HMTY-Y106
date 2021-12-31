@@ -9,12 +9,13 @@ class ProfileData:
     bmiData = None    #BMIHistory
     height = None
     
-    def __init__(self):
+    def init():
         f = open("./data/height.txt", "r", encoding="utf-8")
         ProfileData.height = f.read()
         f.close()
-
-    def load_profile_data(self):
+        ProfileData.load_profile_data()
+        
+    def load_profile_data():
         with open("./data/weightData.json", "r", encoding="utf-8") as f:
             weight_his = f.read()
             if weight_his != "":
@@ -28,12 +29,12 @@ class ProfileData:
             if bmi_his !="":
                 ProfileData.bmiData = BMIHistory(json.loads(bmi_his))
 
-    def change_height(self, new_height: int):
+    def change_height(new_height: int):
         with open("./data/height.txt", "w", encoding="utf-8") as f:
             f.write(f"{new_height}")
-        self.height = new_height
+        ProfileData.height = new_height
 
-    def get_height(self):
+    def get_height():
         return ProfileData.height
 
     def isFirstTime():

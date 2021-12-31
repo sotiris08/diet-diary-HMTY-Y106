@@ -1,5 +1,5 @@
 #ProfileData Classes
-import DateNotFoundError
+from DateNotFoundError import DateNotFoundError
         
 class WeightHistory:
 

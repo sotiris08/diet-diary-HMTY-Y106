@@ -1,1 +1,1 @@
-class DateNotFoundError(): pass
+class DateNotFoundError(Exception): pass
