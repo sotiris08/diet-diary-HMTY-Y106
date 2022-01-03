@@ -1,8 +1,10 @@
 import tkinter as tk
 import os
 from PIL import ImageTk,Image,ImageSequence
+from Client import Client as Client
+from datetime import date
 
-class Client():
+class First():
     def __init__(self,parent):
         self.canvas=tk.Canvas(parent,width=520,height=400)
         self.canvas.grid(columnspan=3,rowspan=3)
@@ -22,8 +24,7 @@ class Client():
         parent.BUTTON.config(font="Arial 20")
 
     def ProfileData(self):
-        if not os.path.isdir("Data"):
-            os.mkdir("Data")
+        if Client.ProfileData.isFirstTime()==True:
             root.destroy()
             self.char=tk.Tk()
             self.char.config(bg="white")
@@ -73,43 +74,47 @@ class Client():
             self.readybutton.grid(row=5,column=2)
         else:
             root.destroy()
-            self.Gui()
+            self.next()
 
     def animate(self,counter):
         self.canvas.itemconfig(self.image,image=self.sequence[counter])
         self.char.after(27,lambda:self.animate((counter+1)%len(self.sequence)))
 
     def readybutton_clicked(self):
-        name=parent.nameentry.get()
-        gender=parent.genderentry.get()
-        height=parent.heightentry.get()
-        weight=parent.weightentry.get()
-        cal=parent.calentry.get()
-        if name and gender and height and weight and cal !="":
-            name=name+"\n"
-            height=height+"\n"
-            gender=gender+"\n"
-            weight=weight+"\n"
-            cal=cal+"\n"
-            li=[name,gender,height,weight,cal]
-            with open("Data/data","w",encoding="utf-8") as f:
-                for i in li:
-                    f.write(i)
+        self.name=parent.nameentry.get()
+        self.gender=parent.genderentry.get()
+        self.height=parent.heightentry.get()
+        self.weight=parent.weightentry.get()
+        self.cal=parent.calentry.get()
+        
+        if self.name and self.gender and self.height and self.weight and self.cal !="":
+            try:
+                bmi=float(self.weight)/((float(self.height))**2)
+            except:
+                self.errorlb=tk.Label(parent.char,\
+                                      text="Fill in all options (correctly)",\
+                                      font="Arial 18")
+                self.errorlb.grid(row=5,column=1)
+                
+            k=date.today()
+            today=k.strftime("%d-%m-%Y")
+            Client.ProfileData.weightData.updateWeightForDay(today,self.weight)
+            Client.ProfileData.bmiData.updateBMIForDay(today,bmi)
             self.char.destroy()
-            self.Gui()
+            self.next()
         else:
-            self.errorlb=tk.Label(parent.char,text="Fill in all options",\
+            self.errorlb=tk.Label(parent.char,text="Fill in all options (correctly)",\
                                   font="Arial 18")
             self.errorlb.grid(row=5,column=1)
 
-    def Gui(self):
+    def next(self):
         self.main=tk.Tk()
         
         
         
 if __name__=='__main__':
+    Client.init()
     root=tk.Tk()
     root.title("Food Diary")
-    parent=Client(root)
+    parent=First(root)
     root.mainloop()
-

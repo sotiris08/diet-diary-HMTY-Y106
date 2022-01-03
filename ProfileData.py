@@ -50,7 +50,7 @@ class ProfileData:
         return ProfileData.calpDay
 
     def isFirstTime():
-        if (not ProfileData.weightData.hasData()) and (not ProfileData.hydrationData.hasData()) and (not ProfileData.bmiData.hasData()):
+        if (not ProfileData.weightData.hasData()) and (not ProfileData.bmiData.hasData()):
             return True
         else:
             return False
