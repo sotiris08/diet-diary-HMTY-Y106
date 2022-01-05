@@ -3,6 +3,8 @@ import os
 from PIL import ImageTk,Image,ImageSequence
 from Client import Client as Client
 from datetime import date
+from calendar2 import MyApp as MyApp
+
 
 class First():
     def __init__(self,parent):
@@ -27,6 +29,9 @@ class First():
         if Client.ProfileData.isFirstTime()==True:
             root.destroy()
             self.char=tk.Tk()
+            self.char.title("Characteristics")
+            self.char.geometry("600x600")
+            self.char.resizable(0,0)
             self.char.config(bg="white")
             self.canvas=tk.Canvas(self.char,width=600,height=600)
             self.canvas.grid(columnspan=6,rowspan=6)
@@ -74,7 +79,7 @@ class First():
             self.readybutton.grid(row=5,column=2)
         else:
             root.destroy()
-            self.next()
+            nex()
 
     def animate(self,counter):
         self.canvas.itemconfig(self.image,image=self.sequence[counter])
@@ -100,21 +105,24 @@ class First():
             today=k.strftime("%d-%m-%Y")
             Client.ProfileData.weightData.updateWeightForDay(today,self.weight)
             Client.ProfileData.bmiData.updateBMIForDay(today,bmi)
+            Client.ProfileData.change_height(self.height)
             self.char.destroy()
-            self.next()
+            nex()
         else:
             self.errorlb=tk.Label(parent.char,text="Fill in all options (correctly)",\
                                   font="Arial 18")
             self.errorlb.grid(row=5,column=1)
 
-    def next(self):
-        self.main=tk.Tk()
-        
-        
-        
+def nex():
+    prof=tk.Tk()
+    MyApp(prof)
+    
+    
 if __name__=='__main__':
     Client.init()
     root=tk.Tk()
     root.title("Food Diary")
+    root.geometry("520x400")
+    root.resizable(0,0)
     parent=First(root)
     root.mainloop()
