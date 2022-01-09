@@ -46,7 +46,7 @@ class First():
             self.genderentry=tk.Entry(self.char,font="Arial 15")
             self.genderentry.grid(row=1,column=1)
 
-            self.heightlabel=tk.Label(self.char,text="Height(m):",font="Arial 15")
+            self.heightlabel=tk.Label(self.char,text="Height(cm):",font="Arial 15")
             self.heightlabel.grid(row=2,column=0)
             self.heightentry=tk.Entry(self.char,font="Arial 15")
             self.heightentry.grid(row=2,column=1)
@@ -94,7 +94,7 @@ class First():
         
         if self.name and self.gender and self.height and self.weight and self.cal !="":
             try:
-                bmi=float(self.weight)/((float(self.height))**2)
+                bmi=float(self.weight)/((float(self.height))**2)*10000
             except:
                 self.errorlb=tk.Label(parent.char,\
                                       text="Fill in all options (correctly)",\
