@@ -30,10 +30,10 @@ class First():
         parent.mainloop()
 
     def mouse_entered(self,event):
-        self.parent.BUTTON.config(font="Arial 23")
+        self.BUTTON.config(font="Arial 23")
         
     def mouse_exit(self,event):
-        self.parent.BUTTON.config(font="Arial 20")
+        self.BUTTON.config(font="Arial 20")
 
     def ProfileData(self):
         if Client.ProfileData.isFirstTime()==True:
@@ -116,10 +116,11 @@ class First():
             Client.ProfileData.weightData.updateWeightForDay(today,self.weight)
             Client.ProfileData.bmiData.updateBMIForDay(today,bmi)
             Client.ProfileData.change_height(self.height)
+            Client.ProfileData.change_gender(self.gender)
             self.char.destroy()
             nex()
         else:
-            self.errorlb=tk.Label(self.parent.char,text="Fill in all options (correctly)",\
+            self.errorlb=tk.Label(self.char,text="Fill in all options (correctly)",\
                                   font="Arial 18")
             self.errorlb.grid(row=5,column=1)
 

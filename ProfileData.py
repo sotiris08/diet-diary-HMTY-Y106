@@ -9,6 +9,7 @@ class ProfileData:
     bmiData = None    #BMIHistory
     calpDay = None
     height = None
+    gender=None
     
     def init():
         f = open("./data/height.txt", "r", encoding="utf-8")
@@ -43,11 +44,19 @@ class ProfileData:
             f.write(f"{new_calpDay}")
         ProfileData.calpDay = new_calpDay
 
+    def change_gender(new_gender):
+        with open("./data/gender.txt","w",encoding="utf-8") as f:
+            f.write(f"{new_gender}")
+        ProfileData.gender=new_gender
+       
     def get_height():
         return ProfileData.height
 
     def get_calpDay():
         return ProfileData.calpDay
+
+    def get_gender():
+        return ProfileData.gender
 
     def isFirstTime():
         if (not ProfileData.weightData.hasData()) and (not ProfileData.bmiData.hasData()):

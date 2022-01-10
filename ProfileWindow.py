@@ -6,7 +6,7 @@ from tkinter import ttk, messagebox
 import datetime
 from tkcalendar import Calendar
 
-class ProfileWindow:
+class ProfileWindow():
 
     curr_year, curr_month, curr_day = str(datetime.date.today()).split("-")
     #curr_day = curr_day.lstrip("0")
@@ -112,15 +112,25 @@ class ProfileWindow:
         self.hydadd_button.config(background="#00A2E8")
 
     def addtobar(self):
-        if self.hyd_bar["value"] == 9:
-            self.hyd_bar["value"] = 10
-            Client.ProfileData.hydrationData.updateHydrationForDay(ProfileWindow.curr_date, 10)
-        elif self.hyd_bar["value"] == 10:
-            Client.ProfileData.hydrationData.updateHydrationForDay(ProfileWindow.curr_date, 11)
+        if Client.ProfileData.get_gender()=="male": 
+            if self.hyd_bar["value"] == 9:
+                self.hyd_bar["value"] = 10
+                Client.ProfileData.hydrationData.updateHydrationForDay(ProfileWindow.curr_date, 10)
+            elif self.hyd_bar["value"] == 10:
+                Client.ProfileData.hydrationData.updateHydrationForDay(ProfileWindow.curr_date, 11)
+            else:
+                self.hyd_bar.step()
+                Client.ProfileData.hydrationData.updateHydrationForDay(ProfileWindow.curr_date, self.hyd_bar["value"])
         else:
-            self.hyd_bar.step()
-            Client.ProfileData.hydrationData.updateHydrationForDay(ProfileWindow.curr_date, self.hyd_bar["value"])
-
+            if self.hyd_bar["value"] == 6:
+                self.hyd_bar["value"] = 7
+                Client.ProfileData.hydrationData.updateHydrationForDay(ProfileWindow.curr_date, 7)
+            elif self.hyd_bar["value"] == 7:
+                Client.ProfileData.hydrationData.updateHydrationForDay(ProfileWindow.curr_date, 8)
+            else:
+                self.hyd_bar.step()
+                Client.ProfileData.hydrationData.updateHydrationForDay(ProfileWindow.curr_date, self.hyd_bar["value"])
+            
 
     #Παράθυρο ERROR
     def errorwindow(self):
@@ -147,10 +157,13 @@ class ProfileWindow:
     
     #Μπάρα hydration
     def create_hydbar(self):
+        if Client.ProfileData.get_gender()=="male":
+            maxh=10
+        else:maxh=7
         barstyle = ttk.Style()
         barstyle.theme_use('default')
         barstyle.configure("blue.Horizontal.TProgressbar", thickness=35, background="#00A2E8", foreground="#00A2E8", bordercolor="#00A2E8")
-        self.hyd_bar = ttk.Progressbar(self.root, style="blue.Horizontal.TProgressbar", orient="horizontal", length=225, mode="determinate", maximum=10, value=Client.ProfileData.hydrationData.getHydrationForDays([self.curr_date])[self.curr_date])
+        self.hyd_bar = ttk.Progressbar(self.root, style="blue.Horizontal.TProgressbar", orient="horizontal", length=225, mode="determinate", maximum=maxh, value=Client.ProfileData.hydrationData.getHydrationForDays([self.curr_date])[self.curr_date])
         self.hyd_bar.place(x=208, y=354)
 
 
