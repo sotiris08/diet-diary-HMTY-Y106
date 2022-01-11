@@ -25,13 +25,13 @@ class ProfileWindow():
         self.canvas = tk.Canvas(self.root, width=595, height=600)
         self.canvas.grid(rowspan=4, columnspan=3)
 
-        self.w_label = tk.Label(self.root, text="Weight (kg):", font="Arial 15")
+        self.w_label = tk.Label(self.root, text="Βάρος (kg):", font="Arial 15")
         self.w_label.grid(row=0, column=0)
         self.weight_entry = ttk.Entry(self.root, font="Arial 15")
         self.weight_entry.grid(row=0, column=1, sticky="w")
         self.create_waddbutton()
         
-        self.height_label = tk.Label(self.root, text="Height:\n({}cm)".format(Client.ProfileData.get_height()), font="Arial 15")
+        self.height_label = tk.Label(self.root, text="Ύψος:\n({}cm)".format(Client.ProfileData.get_height()), font="Arial 15")
         self.height_label.grid(row=1, column=0)
         self.height_entry = ttk.Entry(self.root, font="Arial 15")
         self.height_entry.grid(row=1, column=1, sticky="w")
@@ -196,7 +196,7 @@ class ProfileWindow():
         self.datacal.pack(pady=5, padx=5)
         
         self.create_searchbutton()
-        self.weightlabel = tk.Label(self.h, text="Weight (kg):", font="Arial 15")
+        self.weightlabel = tk.Label(self.h, text="Βάρος (kg):", font="Arial 15")
         self.weightlabel.grid(row=2, column=2, sticky="w")
         self.bmilabel = tk.Label(self.h, text="BMI:", font="Arial 15")
         self.bmilabel.grid(row=3, column=2, sticky="w")

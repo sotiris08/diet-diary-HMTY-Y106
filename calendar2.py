@@ -24,7 +24,7 @@ class MyApp() :
         self.number = 1
 
     def profile_button(self) :
-        self.button = tk.Button(self.f1 , text = 'profile' , font = 'Arial 10' , bg = 'black' , fg = 'white' , width = 20 , height = 3, command= self.showProfile)
+        self.button = tk.Button(self.f1 , text = 'Σελίδα Προφιλ' , font = 'Arial 10' , bg = 'black' , fg = 'white' , width = 20 , height = 3, command= self.showProfile)
         self.button.pack(pady = '25' , padx = '15' , side = 'right' , fill = 'x' , expand = 1)
         
     def create_calendar(self):

@@ -20,7 +20,7 @@ class First():
         self.bg=ImageTk.PhotoImage(Image.open("diary.jpg"))
         self.labelimage=tk.Label(parent,image=self.bg)
         self.labelimage.grid(column=0,row=0,columnspan=3,rowspan=3)
-        self.BUTTON=tk.Button(parent,text="Get Started",font="Arial 20"\
+        self.BUTTON=tk.Button(parent,text="Έναρξη",font="Arial 20"\
                               ,bg="#deeee1",command=self.ProfileData)
         self.BUTTON.bind("<Enter>",self.mouse_entered)
         self.BUTTON.bind("<Leave>",self.mouse_exit)
@@ -46,27 +46,27 @@ class First():
             self.canvas=tk.Canvas(self.char,width=600,height=600)
             self.canvas.grid(columnspan=6,rowspan=6)
 
-            self.namelabel=tk.Label(self.char,text="Name:",font="Arial 15")
+            self.namelabel=tk.Label(self.char,text="Όνομα:",font="Arial 15")
             self.namelabel.grid(row=0,column=0)
             self.nameentry=tk.Entry(self.char,font="Arial 15")
             self.nameentry.grid(row=0,column=1)
 
-            self.genderlabel=tk.Label(self.char,text="Gender:",font="Arial 15")
+            self.genderlabel=tk.Label(self.char,text="Γένος:",font="Arial 15")
             self.genderlabel.grid(row=1,column=0)
             self.genderentry=tk.Entry(self.char,font="Arial 15")
             self.genderentry.grid(row=1,column=1)
 
-            self.heightlabel=tk.Label(self.char,text="Height(cm):",font="Arial 15")
+            self.heightlabel=tk.Label(self.char,text="Ύψος(cm):",font="Arial 15")
             self.heightlabel.grid(row=2,column=0)
             self.heightentry=tk.Entry(self.char,font="Arial 15")
             self.heightentry.grid(row=2,column=1)
 
-            self.weightlabel=tk.Label(self.char,text="Weight(kg):",font="Arial 15")
+            self.weightlabel=tk.Label(self.char,text="Βάρος(kg):",font="Arial 15")
             self.weightlabel.grid(row=3,column=0)
             self.weightentry=tk.Entry(self.char,font="Arial 15")
             self.weightentry.grid(row=3,column=1)
 
-            self.callabel=tk.Label(self.char,text="Cal/day:",font="Arial 15")
+            self.callabel=tk.Label(self.char,text="Θερμίδες/ημέρα:",font="Arial 15")
             self.callabel.grid(row=4,column=0)
             self.calentry=tk.Entry(self.char,font="Arial 15")
             self.calentry.grid(row=4,column=1)
@@ -84,7 +84,7 @@ class First():
             self.image=self.canvas.create_image(500,315,image=self.sequence[0])
             self.animate(1)
 
-            self.readybutton=tk.Button(self.char,text="Ready",font="Arial 18",command=self.\
+            self.readybutton=tk.Button(self.char,text="Επόμενο",font="Arial 18",command=self.\
                                        readybutton_clicked)
             self.readybutton.grid(row=5,column=2)
         else:
