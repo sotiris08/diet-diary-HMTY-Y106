@@ -1,4 +1,4 @@
-from re import L
+from re import L, S
 import tkinter as tk
 import tkcalendar
 from tkcalendar import Calendar,DateEntry
@@ -71,50 +71,57 @@ class MyApp() :
         self.btn = tk.Button(self.f3 , width = 3 , text = '+' , command = self.extrafood)
         self.label = tk.Label(self.f4 , text = 'ποσα γραμμαρια :' , font = 'Arial 20')
         self.entry = tk.Entry(self.f4)
+
+        self.foodcals = {}
         if self.value == 'πρωινό' :
             string1 = ''
             f = open('data/morning.txt', 'r', encoding='utf-8')
             morning = f.read()
-            for self.line in morning.split('\n') :
-                self.line = self.line.split('-')
-                self.name = self.line[0]
+            for line in morning.split('\n') :
+                line = line.split('-')
+                self.name = line[0]
                 string1 = string1 + self.name + '+'
+                self.foodcals[line[0]] = line[1]
             self.combobox['values'] = (string1.split('+'))
         elif self.value == 'δεκατιανό' :
             string2 = ''
             f = open('data/decatan.txt', 'r', encoding='utf-8')
-            morning = f.read()
-            for line in morning.split('\n') :
+            decatan = f.read()
+            for line in decatan.split('\n') :
                 line = line.split('-')
                 self.name = line[0]
                 string2 = string2 + self.name + '+'
+                self.foodcals[line[0]] = line[1]
             self.combobox['values'] = (string2.split('+'))
         elif self.value == 'μεσημεριανό' :
             string3 = ''
             f = open('data/lunch.txt', 'r', encoding='utf-8')
-            morning = f.read()
-            for line in morning.split('\n') :
+            lunch = f.read()
+            for line in lunch.split('\n') :
                 line = line.split('-')
                 self.name = line[0]
                 string3 = string3 + self.name + '+'
+                self.foodcals[line[0]] = line[1]
             self.combobox['values'] = (string3.split('+'))
         elif self.value == 'απογευματινό' :
             string4 = ''
             f = open('data/evening.txt', 'r', encoding='utf-8')
-            morning = f.read()
-            for line in morning.split('\n') :
+            evening = f.read()
+            for line in evening.split('\n') :
                 line = line.split('-')
                 self.name = line[0]
                 string4 = string4 + self.name + '+'
+                self.foodcals[line[0]] = line[1]
             self.combobox['values'] = (string4.split('+')) 
         elif self.value == 'βραδινό' :
             string5 = ''
             f = open('data/diner.txt', 'r', encoding='utf-8')
-            morning = f.read()
-            for line in morning.split('\n') :
+            diner = f.read()
+            for line in diner.split('\n') :
                 line = line.split('-')
                 self.name = line[0]
                 string5 = string5 + self.name + '+'
+                self.foodcals[line[0]] = line[1]
             self.combobox['values'] = (string5.split('+'))
         f.close()
         self.combobox.pack(pady='30' , side = 'left')
@@ -125,14 +132,16 @@ class MyApp() :
 
         
     def handler(self , event) :
+        print(self.combobox.get())
         grams = ''
         cals = ''
         self.cals = cals
         self.grams = grams
         self.grams = self.entry.get()
         self.grams = int(self.grams)
-        self.cals_per_100 = int(self.line[1])
-        self.cals = self.cals_per_100 * self.grams
+        self.selected_food_name = self.combobox.get()
+        self.cals_per_100 = int(self.foodcals[self.selected_food_name])
+        self.cals = self.cals_per_100 * (self.grams / 100)
         self.lb = tk.Label(self.f5 , text = 'Υπολογισμός θερμιδών : ' + str(self.cals) + ' calories')
         self.lb.pack(fill = 'both' , expand = 1)
         self.save_in_file()
@@ -182,23 +191,23 @@ class MyApp() :
     def check_for_meal(self) :
         if self.value == 'πρωινό' :
             f = open('data/' + str(self.day) + '-' + str(self.month) + '-' + str(self.year) + '-' + 'morning' + '.txt' , 'a' ,  encoding='utf-8')
-            f.write('φαγητο : ' + str(self.name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
+            f.write('φαγητο : ' + str(self.selected_food_name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
             f.close()
         elif self.value == 'δεκατιανό' :
             f = open('data/' + str(self.day) + '-' + str(self.month) + '-' + str(self.year) + '-' + 'decatan' + '.txt' , 'a' ,  encoding='utf-8')
-            f.write('φαγητο : ' + str(self.name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
+            f.write('φαγητο : ' + str(self.selected_food_name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
             f.close()
         elif self.value == 'μεσημεριανό' :
             f = open('data/' + str(self.day) + '-' + str(self.month) + '-' + str(self.year) + '-' + 'lunch' + '.txt' , 'a' ,  encoding='utf-8')
-            f.write('φαγητο : ' + str(self.name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
+            f.write('φαγητο : ' + str(self.selected_food_name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
             f.close()
         elif self.value == 'απογευματινό' :
             f = open('data/' + str(self.day) + '-' + str(self.month) + '-' + str(self.year) + '-' + 'evening' + '.txt' , 'a' ,  encoding='utf-8')
-            f.write('φαγητο : ' + str(self.name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
+            f.write('φαγητο : ' + str(self.selected_food_name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
             f.close()
         elif self.value == 'βραδινό' :
             f = open('data/' + str(self.day) + '-' + str(self.month) + '-' + str(self.year) + '-' + 'diner' + '.txt' , 'a' ,  encoding='utf-8')
-            f.write('φαγητο : ' + str(self.name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
+            f.write('φαγητο : ' + str(self.selected_food_name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
             f.close()
             
         
