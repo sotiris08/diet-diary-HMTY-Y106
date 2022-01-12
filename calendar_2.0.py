@@ -96,9 +96,9 @@ class MyApp() :
             string2 = ''
             f = open('decatan.txt', 'r' , encoding='utf-8')
             decatan = f.read()
-            for line in decatan.split('\n') :
-                line = line.split('-')
-                self.name = line[0]
+            for self.line in decatan.split('\n') :
+                self.line = self.line.split('-')
+                self.name = self.line[0]
                 self.Foods.update({self.line[0] : self.line[1]})
                 string2 = string2 + self.name + '+'
             self.combobox['values'] = (string2.split('+'))
@@ -106,9 +106,9 @@ class MyApp() :
             string3 = ''
             f = open('lunch.txt', 'r' , encoding='utf-8')
             lunch = f.read()
-            for line in lunch.split('\n') :
-                line = line.split('-')
-                self.name = line[0]
+            for self.line in lunch.split('\n') :
+                self.line = self.line.split('-')
+                self.name = self.line[0]
                 self.Foods.update({self.line[0] : self.line[1]})
                 string3 = string3 + self.name + '+'
             self.combobox['values'] = (string3.split('+'))
@@ -116,9 +116,9 @@ class MyApp() :
             string4 = ''
             f = open('evening.txt', 'r' , encoding='utf-8')
             evening = f.read()
-            for line in evening.split('\n') :
-                line = line.split('-')
-                self.name = line[0]
+            for self.line in evening.split('\n') :
+                self.line = self.line.split('-')
+                self.name = self.line[0]
                 self.Foods.update({self.line[0] : self.line[1]})
                 string4 = string4 + self.name + '+'
             self.combobox['values'] = (string4.split('+')) 
@@ -126,9 +126,9 @@ class MyApp() :
             string5 = ''
             f = open('diner.txt', 'r' , encoding='utf-8')
             diner = f.read()
-            for line in diner.split('\n') :
-                line = line.split('-')
-                self.name = line[0]
+            for self.line in diner.split('\n') :
+                self.line = self.line.split('-')
+                self.name = self.line[0]
                 self.Foods.update({self.line[0] : self.line[1]})
                 string5 = string5 + self.name + '+'
             self.combobox['values'] = (string5.split('+'))
@@ -344,7 +344,7 @@ class MyApp() :
     # στα αρχεια του πρωινου/δεκατιανου/μεσημεριανου/απογευματινου/βραδινου
     # ωστε να εμφανιστουν ως δυνατη επιλογη
     # την επομενη φορα που θα χρησημοποιησει
-    # ο χρηστης την λειτουργεια προσθηκηςε φαγητου
+    # ο χρηστης την λειτουργεια προσθηκης φαγητου
     def save_in_listbox(self) :
         if self.value == 'πρωινό' :
             f = open('morning.txt', 'a' , encoding='utf-8')
