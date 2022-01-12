@@ -7,6 +7,8 @@ import os
 #-----------------
 
 class MyApp() :
+
+    # αρχικο παραθυρο calendar και buttons
     def __init__(self,root) :
         self.root = root
         root.title('Calendar')
@@ -21,22 +23,27 @@ class MyApp() :
         self.create_button2()
         self.number = 1
 
+    # profile  button
     def profile_button(self) :
         self.button = tk.Button(self.f1 , text = 'profile' , font = 'Arial 10' , bg = 'black' , fg = 'white' , width = 20 , height = 3)
         self.button.pack(pady = '25' , padx = '15' , side = 'right' , fill = 'x' , expand = 1)
-        
+
+    # calendar gui
     def create_calendar(self):
         self.cal = Calendar(self.f1, selectmode = 'day')
         self.cal.pack(pady = "25" , padx = '15', side = 'left' , fill = 'both' , expand = 1)
 
+    # add food button
     def create_button1(self) :
         self.button = tk.Button(self.f2, text = "Προσθήκη \n Γεύματος" , font = "Arial 20" , bg = "green" , height = 2 , width = 8 , command = self.listbox)
         self.button.pack(pady = '10' , padx = '10' , side = 'left')
 
+    # show food button
     def create_button2(self) :
         self.button = tk.Button(self.f2 , text = "Γεύματα \n Ημερας" , font = "Arial 20" , bg = "blue" , height = 2 , width = 8 , command = self.show_meals)
         self.button.pack(pady = "10" , padx = "20" , side = 'right')
-        
+
+    # createlistbox  
     def listbox(self) :
         self.w = tk.Toplevel()
         self.w.geometry("300x300+300+300")
@@ -46,6 +53,7 @@ class MyApp() :
         self.lb.pack(fill = "both" , expand =1)
         self.lb.bind('<<ListboxSelect>>', self.getElement)
 
+    # window with meal selection after listbox
     def getElement(self , event):
         selection = event.widget.curselection()
         value = event.widget.get(selection)
@@ -64,11 +72,16 @@ class MyApp() :
             self.label1.pack()
             self.meal_selection()
 
+    # combobox and continue of window with meal selection 
     def meal_selection(self) :
-        self.combobox = ttk.Combobox(self.f3, width = 27, textvariable = tk.StringVar())
+        self.Foods = {}
+        self.current_var = tk.StringVar()
+        self.combobox = ttk.Combobox(self.f3, width = 27, textvariable = self.current_var)
+        self.food = self.current_var.get()
         self.btn = tk.Button(self.f3 , width = 3 , text = '+' , command = self.extrafood)
         self.label = tk.Label(self.f4 , text = 'ποσα γραμμαρια :' , font = 'Arial 20')
         self.entry = tk.Entry(self.f4)
+        # ανάλογα με την επιλογη του χρηστη απο το listbox εμφανιζονται διαφορετικα φαγητα στο combobox
         if self.value == 'πρωινό' :
             string1 = ''
             f = open('morning.txt', 'r' , encoding='utf-8')
@@ -76,42 +89,47 @@ class MyApp() :
             for self.line in morning.split('\n') :
                 self.line = self.line.split('-')
                 self.name = self.line[0]
+                self.Foods.update({self.line[0] : self.line[1]})
                 string1 = string1 + self.name + '+'
             self.combobox['values'] = (string1.split('+'))
         elif self.value == 'δεκατιανό' :
             string2 = ''
             f = open('decatan.txt', 'r' , encoding='utf-8')
-            morning = f.read()
-            for line in morning.split('\n') :
+            decatan = f.read()
+            for line in decatan.split('\n') :
                 line = line.split('-')
                 self.name = line[0]
+                self.Foods.update({self.line[0] : self.line[1]})
                 string2 = string2 + self.name + '+'
             self.combobox['values'] = (string2.split('+'))
         elif self.value == 'μεσημεριανό' :
             string3 = ''
             f = open('lunch.txt', 'r' , encoding='utf-8')
-            morning = f.read()
-            for line in morning.split('\n') :
+            lunch = f.read()
+            for line in lunch.split('\n') :
                 line = line.split('-')
                 self.name = line[0]
+                self.Foods.update({self.line[0] : self.line[1]})
                 string3 = string3 + self.name + '+'
             self.combobox['values'] = (string3.split('+'))
         elif self.value == 'απογευματινό' :
             string4 = ''
             f = open('evening.txt', 'r' , encoding='utf-8')
-            morning = f.read()
-            for line in morning.split('\n') :
+            evening = f.read()
+            for line in evening.split('\n') :
                 line = line.split('-')
                 self.name = line[0]
+                self.Foods.update({self.line[0] : self.line[1]})
                 string4 = string4 + self.name + '+'
             self.combobox['values'] = (string4.split('+')) 
         elif self.value == 'βραδινό' :
             string5 = ''
             f = open('diner.txt', 'r' , encoding='utf-8')
-            morning = f.read()
-            for line in morning.split('\n') :
+            diner = f.read()
+            for line in diner.split('\n') :
                 line = line.split('-')
                 self.name = line[0]
+                self.Foods.update({self.line[0] : self.line[1]})
                 string5 = string5 + self.name + '+'
             self.combobox['values'] = (string5.split('+'))
         f.close()
@@ -121,21 +139,23 @@ class MyApp() :
         self.entry.pack(fill = 'both' , expand = 1 , side = 'right')
         self.w1.bind('<Return>' , self.handler)
 
-        
+    # υπολογιζει τις θερμιδες για καθε προσθηκη φαγητου
+    # τυπωνει την απαντηση στο παραθυρο επιλογης φαγητων 
     def handler(self , event) :
+        self.food = self.current_var.get()
         grams = ''
         cals = ''
         self.cals = cals
         self.grams = grams
         self.grams = self.entry.get()
         self.grams = int(self.grams)
-        self.cals_per_100 = int(self.line[1])
-        self.cals = self.cals_per_100 * self.grams
+        self.cals_per_100 = int(self.Foods[self.food])
+        self.cals = self.cals_per_100 * self.grams / 100
         self.lb = tk.Label(self.f5 , text = 'Υπολογισμός θερμιδών : ' + str(self.cals) + ' calories')
         self.lb.pack(fill = 'both' , expand = 1)
         self.save_in_file()
 
-
+    # καθε φορα που προστηθεται καινουργιο φαγητο το αποθηκευει σε αντιστοιχο αρχειο
     def save_in_file(self) :
         self.date = self.cal.get_date()
         self.month , self.day , self.year = self.cal.get_date().split('/')
@@ -148,11 +168,11 @@ class MyApp() :
         if self.number == 1 :
             self.create_meal_files()
             self.number = self.number + 1
-        self.month , self.day , self.year = self.cal.get_date().split('/')
+        f.close()
         self.check_for_date()
         self.check_for_meal()
         
-        
+    # ελεγχει αν η επιλεγμενη ημερομηνια εχει ξανα επιλεγθει αλλη φορα για προσθηκη φαγητου     
     def check_for_date(self) :
         count = 1
         f = open(str(self.day) + '-' + str(self.month) + '-' + str(self.year) + '-' + 'morning' + '.txt' , 'r' ,  encoding='utf-8')
@@ -176,30 +196,34 @@ class MyApp() :
                 f.write('βραδινό' + ' : ' + '\n')
                 f.close()
                 count += 1
-                
+        else :
+            f.close()
+
+    # αποθηκευση φαγητων            
     def check_for_meal(self) :
         if self.value == 'πρωινό' :
             f = open(str(self.day) + '-' + str(self.month) + '-' + str(self.year) + '-' + 'morning' + '.txt' , 'a' ,  encoding='utf-8')
-            f.write('φαγητο : ' + str(self.name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
+            f.write('φαγητο : ' + str(self.food) + '\t' + 'γραμμάρια : ' + str(self.Foods[self.food]) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
             f.close()
         elif self.value == 'δεκατιανό' :
             f = open(str(self.day) + '-' + str(self.month) + '-' + str(self.year) + '-' + 'decatan' + '.txt' , 'a' ,  encoding='utf-8')
-            f.write('φαγητο : ' + str(self.name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
+            f.write('φαγητο : ' + str(self.food) + '\t' + 'γραμμάρια : ' + str(self.Foods[self.food]) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
             f.close()
         elif self.value == 'μεσημεριανό' :
             f = open(str(self.day) + '-' + str(self.month) + '-' + str(self.year) + '-' + 'lunch' + '.txt' , 'a' ,  encoding='utf-8')
-            f.write('φαγητο : ' + str(self.name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
+            f.write('φαγητο : ' + str(self.food) + '\t' + 'γραμμάρια : ' + str(self.Foods[self.food]) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
             f.close()
         elif self.value == 'απογευματινό' :
             f = open(str(self.day) + '-' + str(self.month) + '-' + str(self.year) + '-' + 'evening' + '.txt' , 'a' ,  encoding='utf-8')
-            f.write('φαγητο : ' + str(self.name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
+            f.write('φαγητο : ' + str(self.food) + '\t' + 'γραμμάρια : ' + str(self.Foods[self.food]) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
             f.close()
         elif self.value == 'βραδινό' :
             f = open(str(self.day) + '-' + str(self.month) + '-' + str(self.year) + '-' + 'diner' + '.txt' , 'a' ,  encoding='utf-8')
-            f.write('φαγητο : ' + str(self.name) + '\t' + 'γραμμάρια : ' + str(self.grams) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
+            f.write('φαγητο : ' + str(self.food) + '\t' + 'γραμμάρια : ' + str(self.Foods[self.food]) + ' gr' + '\t' + 'θερμιδες : ' + str(self.cals) + '\n')
             f.close()
             
-        
+    # προσθηκη επιπλεον φαγητου που δεν εμπεριεχετια στις επιλογες της εφαρμογης
+    # μεσω του κουμπιου [+]
     def extrafood(self) :
         self.extrafoodwindow()
         self.eflabel = tk.Label(self.f6 , text = 'επιλογη επιπλεον γευματος' )
@@ -209,7 +233,7 @@ class MyApp() :
         self.namelabel.pack(side = 'left' , padx = '20')
         self.entry1 = tk.Entry(self.f7)
         self.entry1.pack(side = 'right' , padx = '20')
-        self.name = self.entry1.get()
+        self.food = self.entry1.get()
         # food calories
         self.calslabel = tk.Label(self.f8 , text = 'θερμιδες ανα \n 100 gr.' , justify = 'left')
         self.calslabel.pack(side = 'left' , padx = '20')
@@ -226,8 +250,11 @@ class MyApp() :
         self.entrybutton = tk.Button(self.f10 , text = 'αποθηκευση' , command = self.getvalue)
         self.entrybutton.pack(pady = '20')
 
-        
+    # εμφανιση αποθηκευμενων φαγητων για την επιλεγμενη ημερομηνια
+    # μεσω του κουμπιου [Γευματα Ημερας]
     def show_meals(self) :
+        self.date = self.cal.get_date()
+        self.month , self.day , self.year = self.cal.get_date().split('/')
         self.m = tk.Toplevel()
         self.m.geometry("400x400+300+300")
         self.fr1 = tk.Frame(self.m)
@@ -261,6 +288,9 @@ class MyApp() :
         f.close()
         self.diner_meals.pack()
 
+    # δημιουργια φακελων για επιλεγμενη μερα
+    # με σκοπο την διαχωριση των επιλογων γευματων
+    # σε πρωινο/δεκατιανο/μεσημεριανο/απογευματινο/βραδινο
     def create_meal_files(self) :
         self.month , self.day , self.year = self.cal.get_date().split('/')
         f = open(str(self.day) + '-' + str(self.month) + '-' + str(self.year) + '-' + 'morning' + '.txt' , 'a' ,  encoding='utf-8')
@@ -274,6 +304,8 @@ class MyApp() :
         f = open(str(self.day) + '-' + str(self.month) + '-' + str(self.year) + '-' + 'diner' + '.txt' , 'a' ,  encoding='utf-8')
         f.close()
 
+    # δημιουργια παραθυρου στο οποιο γινεται η προσθηκη
+    # επιπλεον γευματων που δεν περιεχονται στις επιλογες της εφαρμογης
     def extrafoodwindow(self) :
         self.w2 = tk.Toplevel()
         self.w2.geometry('250x250+400+500')
@@ -288,37 +320,47 @@ class MyApp() :
         self.f10 = tk.Frame(self.w2)
         self.f10.pack()
 
+    # αρχειο all_dates που ειναι υπευθυνο να κραταει ιστορικο
+    # για ολες τις ημερομηνιες στις οποιες ειναι αποθηκευμενα γευματα
     def all_dates(self) :
         f = open('all_dates.txt' , 'a' ,  encoding='utf-8')
         f.write(str(self.date))
         f.write('\n')
         f.close()
-        
+
+    # προετοιμαζει την αποθηκευση extra_foods
+    # κλεινει το παραθυρο προσθηκης φαγητων 
     def getvalue(self) :
-        self.name = self.entry1.get()
+        self.food = self.entry1.get()
         self.cals = self.entry2.get()
         self.grams = self.entry3.get()
         self.w2.destroy()
+        self.Foods.update({self.food : self.cals})
         # save_in_file call
         self.save_in_file()
         self.save_in_listbox()
 
+    # αποθηκευει τις νεες επιλογες φαγητων
+    # στα αρχεια του πρωινου/δεκατιανου/μεσημεριανου/απογευματινου/βραδινου
+    # ωστε να εμφανιστουν ως δυνατη επιλογη
+    # την επομενη φορα που θα χρησημοποιησει
+    # ο χρηστης την λειτουργεια προσθηκηςε φαγητου
     def save_in_listbox(self) :
         if self.value == 'πρωινό' :
             f = open('morning.txt', 'a' , encoding='utf-8')
-            f.write('\n' + self.name + '-' + self.cals)     
+            f.write('\n' + self.food + '-' + self.cals)     
         elif self.value == 'δεκατιανό' :
             f = open('decatan.txt', 'a' , encoding='utf-8')
-            f.write('\n' + self.name + '-' + self.cals)
+            f.write('\n' + self.food + '-' + self.cals)
         elif self.value == 'μεσημεριανό' :
             f = open('lunch.txt', 'a' , encoding='utf-8')
-            f.write('\n' + self.name + '-' + self.cals)
+            f.write('\n' + self.food + '-' + self.cals)
         elif self.value == 'απογευματινό' :
             f = open('evening.txt', 'a' , encoding='utf-8')
-            f.write('\n' + self.name + '-' + self.cals)
+            f.write('\n' + self.food + '-' + self.cals)
         elif self.value == 'βραδινό' :
             f = open('diner.txt', 'a' , encoding='utf-8')
-            f.write('\n' + self.name + '-' + self.cals)
+            f.write('\n' + self.food + '-' + self.cals)
         f.close()
 #-----------------
 
