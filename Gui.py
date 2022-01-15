@@ -8,6 +8,6 @@ class Gui:
     StartView = StartView()
     CalendarView = CalendarView()
 
-    def beginView(view):
+    def beginView(view): #Εκκίνηση νέου παράθυρου
         root = tk.Tk()
         view.init(root)

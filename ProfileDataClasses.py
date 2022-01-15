@@ -7,6 +7,7 @@ class WeightHistory:
         self.history = data
 
     def hasData(self):
+        '''Επιστρέφει True αν υπάρχουν αποθηκευμένα δεδομένα'''
         if len(self.history) == 0: return False
         else: return True
 
@@ -21,6 +22,7 @@ class WeightHistory:
         return result
 
     def updateWeightForDay(self, date, weight):
+        '''Αλλαγή αποθηκευμένων δεδομένων για μια συγκεκριμένη ημέρα'''
         self.history[date] = weight
         WeightHistory.saveWeightHistory(self.history)
 
@@ -32,6 +34,7 @@ class WeightHistory:
         except KeyError: raise DateNotFoundError('Invalid Date')
 
     def saveWeightHistory(data):
+        '''Αποθήκευση'''
         data = getValidJSON(data)
         f = open('./data/weightData.json', "w", encoding='utf-8')
         f.write(data)
@@ -46,6 +49,7 @@ class HydrationHistory:
         self.history = data
 
     def hasData(self):
+        '''Επιστρέφει True αν υπάρχουν αποθηκευμένα δεδομένα'''
         if len(self.history) == 0: return False
         else: return True
 
@@ -60,6 +64,7 @@ class HydrationHistory:
         return result
 
     def updateHydrationForDay(self, date, hydration):
+        '''Αλλαγή αποθηκευμένων δεδομένων για μια συγκεκριμένη ημέρα'''
         self.history[date] = hydration
         HydrationHistory.saveHydrationHistory(self.history)
 
@@ -71,6 +76,7 @@ class HydrationHistory:
         except KeyError: raise DateNotFoundError('Invalid Date')
 
     def saveHydrationHistory(data):
+        '''Αποθήκευση'''
         data = getValidJSON(data)
         f = open('./data/hydrationData.json', 'w', encoding='utf-8')
         f.write(data)
@@ -86,6 +92,7 @@ class BMIHistory:
         self.history = data
 
     def hasData(self):
+        '''Επιστρέφει True αν υπάρχουν αποθηκευμένα δεδομένα'''
         if len(self.history) == 0: return False
         else: return True
 
@@ -100,6 +107,7 @@ class BMIHistory:
         return result
 
     def updateBMIForDay(self, date, BMI):
+        '''Αλλαγή αποθηκευμένων δεδομένων για μια συγκεκριμένη ημέρα'''
         self.history[date] = BMI
         BMIHistory.saveBMIHistory(self.history)
 
@@ -111,6 +119,7 @@ class BMIHistory:
         except KeyError: raise DateNotFoundError('Invalid Date')
 
     def saveBMIHistory(data):
+        '''Αποθήκευση'''
         data = getValidJSON(data)
         f = open('./data/bmiData.json', 'w', encoding='utf-8')
         f.write(data)

@@ -11,7 +11,7 @@ class ProfileData:
     height = None
     gender=None
     
-    def init():
+    def init(): #Ανάγνωση δεδομένων
         f = open("./data/height.txt", "r", encoding="utf-8")
         ProfileData.height = f.read()
         f.close()
@@ -34,17 +34,17 @@ class ProfileData:
             if bmi_his !="":
                 ProfileData.bmiData = BMIHistory(json.loads(bmi_his))
 
-    def change_height(new_height: int):
+    def change_height(new_height: int): #Αλλαγή ύψους
         with open("./data/height.txt", "w", encoding="utf-8") as f:
             f.write(f"{new_height}")
         ProfileData.height = new_height
 
-    def change_calpDay(new_calpDay: int):
+    def change_calpDay(new_calpDay: int): #Αλλαγή calpday
         with open("./data/calpday.txt", "w", encoding="utf-8") as f:
             f.write(f"{new_calpDay}")
         ProfileData.calpDay = new_calpDay
 
-    def change_gender(new_gender):
+    def change_gender(new_gender): #Αλλαγή φύλου
         with open("./data/gender.txt","w",encoding="utf-8") as f:
             f.write(f"{new_gender}")
         ProfileData.gender=new_gender
@@ -58,7 +58,7 @@ class ProfileData:
     def get_gender():
         return ProfileData.gender
 
-    def isFirstTime():
+    def isFirstTime(): #Επιστρέφει True αν ο χρίστης ανοίγει πρώτη φορά την εφαρμογή
         if (not ProfileData.weightData.hasData()) and (not ProfileData.bmiData.hasData()):
             return True
         else:
